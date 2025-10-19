@@ -16,7 +16,7 @@
         android:layout_gravity="center"
         android:paddingTop="10dp"
         android:text="State Capitals Quiz"
-        android:textSize="34sp"
+        android:textSize="48sp"
         android:textStyle="bold" />
 
     <TextView
@@ -24,22 +24,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="70dp"
         android:gravity="center"
         android:text="Test your knowledge on State Capitals"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Each quiz will have 6 qustions with 3 answer choices to pick from. Swipe left when you have finished answering each question to display the next questions. Your total score will be displayed at the end of the quiz." />
+        android:layout_marginBottom="70dp"
+        android:gravity="center"
+        android:text="Each quiz will have 6 qustions with 3 answer choices to pick from. Swipe left when you have finished answering each question to display the next questions. Your total score will be displayed at the end of the quiz."
+        android:textSize="24sp" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="New Quiz" />
+        android:text="New Quiz"
+        android:textSize="24sp" />
 
     <Button
         android:id="@+id/button2"
@@ -47,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="Past Quizzes Results" />
+        android:text="Past Quizzes Results"
+        android:textSize="24sp" />
 
 </LinearLayout>
