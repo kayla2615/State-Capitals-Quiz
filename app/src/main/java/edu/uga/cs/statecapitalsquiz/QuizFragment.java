@@ -1,5 +1,6 @@
 package edu.uga.cs.statecapitalsquiz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,14 +16,12 @@ import java.util.Random;
 public class QuizFragment extends Fragment {
 
     private static final String TAG = "QuizFragment";
-
-    private TextView title;
     private TextView question;
     private RadioButton radioButton1;
     private RadioButton radioButton2;
     private RadioButton radioButton3;
-
-    private int finalScore = 0;
+    private int score = 0;
+    private boolean answerRecorded = false;
 
     // Date and time when quiz was submitted
     private String quizSubmissionDateTime;
@@ -74,7 +73,6 @@ public class QuizFragment extends Fragment {
             questionNum = args.getInt("questionNum", 0);
         }
 
-        title = view.findViewById( R.id.quizTitle );
         question = view.findViewById( R.id.questionText );
         radioButton1 = view.findViewById( R.id.radioButton1 );
         radioButton2 = view.findViewById( R.id.radioButton2 );
@@ -94,10 +92,7 @@ public class QuizFragment extends Fragment {
         while (state1 == state2) {
             state2 = random.nextInt(3) + 1;
         }
-        while (state1 == state3) {
-            state3 = random.nextInt(3) + 1;
-        }
-        while (state2 == state3) {
+        while (state1 == state3 || state2 == state3) {
             state3 = random.nextInt(3) + 1;
         }
 
@@ -105,5 +100,70 @@ public class QuizFragment extends Fragment {
         radioButton2.setText("B: " + quizData[questionNum][state2]);
         radioButton3.setText("C: " + quizData[questionNum][state3]);
 
+    }
+    
+    /**
+     * Check if the user's answer is correct by comparing directly with quizData
+     * Updates the quizData last column and correct answers count
+     * @return true if correct, false if incorrect
+     */
+    public void checkAnswer() {
+        if (answerRecorded) {
+            return;
+        }
+
+        // Get the selected answer
+        String answer = "";
+        if (radioButton1.isChecked()) {
+            answer = radioButton1.getText().toString().substring(3); // Remove "A: " prefix
+        } else if (radioButton2.isChecked()) {
+            answer = radioButton2.getText().toString().substring(3); // Remove "B: " prefix
+        } else if (radioButton3.isChecked()) {
+            answer = radioButton3.getText().toString().substring(3); // Remove "C: " prefix
+        }
+        
+        // Incorrect if no answer is selected
+        if (answer.isEmpty()) {
+            quizData[questionNum][4] = "0"; // Mark as incorrect in last column
+            answerRecorded = true;
+            return;
+        }
+
+        // Put 1 in the data's last column for correct and 0 for incorrect
+        if (answer.equals(quizData[questionNum][1])) {
+            score++;
+            quizData[questionNum][4] = "1"; // Mark as correct
+            answerRecorded = true;
+            return;
+        } else {
+            quizData[questionNum][4] = "0"; // Mark as incorrect
+            answerRecorded = true;
+            return;
+        }
+    }
+    
+    /**
+     * Get the question number for this fragment
+     * @return question number (0-based)
+     */
+    public int getQuestionNum() {
+        return questionNum;
+    }
+
+    
+    /**
+     * Get the number of correct answers
+     * @return count of correct answers
+     */
+    public int getScore() {
+        return score;
+    }
+
+    public boolean isAnswerRecorded() {
+        return answerRecorded;
+    }
+
+    public void setQuizSubmissionDateTime(String quizSubmissionDateTime) {
+        this.quizSubmissionDateTime = quizSubmissionDateTime;
     }
 }
