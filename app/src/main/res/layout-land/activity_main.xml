@@ -75,8 +75,3 @@
             app:layout_constraintTop_toBottomOf="@+id/button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
-
-
-

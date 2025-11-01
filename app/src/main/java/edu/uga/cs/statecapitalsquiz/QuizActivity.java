@@ -17,15 +17,52 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * QuizActivity manages the quiz experience using a ViewPager2 to display
+ * quiz questions. It handles swiping navigation between questions, records answers when
+ * users swipe between pages, and shows the results fragment when the quiz is completed.
+ * The activity tracks the total score across all questions.
+ *
+ * @author State Capitals Quiz Team
+ */
 public class QuizActivity extends AppCompatActivity {
 
     private static final String TAG = "QuizActivity";
+    
+    /**
+     * ViewPager2 that displays quiz question fragments
+     */
     private ViewPager2 pager;
+    
+    /**
+     * Adapter that manages quiz fragment instances
+     */
     private QuizPagerAdapter adapter;
+    
+    /**
+     * Current score accumulator (not actively used, calculated at end)
+     */
     private int currentScore = 0;
+    
+    /**
+     * Total number of questions in the quiz
+     */
     private int totalQuestions = 6;
+    
+    /**
+     * Flag to detect when user attempts to swipe past the last question
+     */
     private boolean userTriedToSwipePastEnd = false;
 
+    /**
+     * Called when the activity is first created. Initializes the ViewPager2 with
+     * quiz fragments and sets up page change listeners to record answers and detect
+     * quiz completion.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     * previously being shut down, this Bundle contains
+     * the data it most recently supplied in onSaveInstanceState.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +142,11 @@ public class QuizActivity extends AppCompatActivity {
         return totalQuestions;
     }
 
+    /**
+     * Displays the results fragment after the quiz is completed. Calculates the total
+     * score by summing scores from all quiz fragments, records the submission timestamp,
+     * and replaces the quiz ViewPager with the results fragment.
+     */
     private void showResultsFragment() {
         // Ensure last question's answer is recorded
         int last = totalQuestions - 1;
