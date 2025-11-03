@@ -15,46 +15,46 @@ import android.util.Log;
  * only constructor is private.
  * Access to the only instance is via the getInstance method.
  */
-public class QuizDataDBHelper extends SQLiteOpenHelper {
+public class CurrentQuizDataDBHelper extends SQLiteOpenHelper {
 
-    private static final String DEBUG_TAG = "QuizDataDBHelper";
+    private static final String DEBUG_TAG = "CurrentQuizDataDBHelper";
 
-    private static final String DB_NAME = "quizdata.db";
+    private static final String DB_NAME = "currentquizdata.db";
     private static final int DB_VERSION = 1;
 
     // Define all names (strings) for table and column names.
     // This will be useful if we want to change these names later.
-    public static final String TABLE_QUIZDATA = "quizdata";
-    public static final String QUIZDATA_COLUMN_ID = "_id";
-    public static final String QUIZDATA_COLUMN_QUIZDATE = "quizdate";
-    public static final String QUIZDATA_COLUMN_QUIZSCORE = "quizscore";
+    public static final String TABLE_CURRENTQUIZDATA = "currentquizdata";
+    public static final String CURRENTQUIZDATA_COLUMN_ID = "_id";
+    public static final String CURRENTQUIZDATA_COLUMN_QUESTIONID = "questionid";
+    public static final String CURRENTQUIZDATA_COLUMN_SELECTEDANSWER = "selectedanswer";
 
     // This is a reference to the only instance for the helper.
-    private static QuizDataDBHelper helperInstance;
+    private static CurrentQuizDataDBHelper helperInstance;
 
     // A Create table SQL statement to create a table for job leads.
     // Note that _id is an auto increment primary key, i.e. the database will
     // automatically generate unique id values as keys.
-    private static final String CREATE_QUIZDATA =
-            "create table " + TABLE_QUIZDATA + " ("
-                    + QUIZDATA_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + QUIZDATA_COLUMN_QUIZDATE + " TEXT, "
-                    + QUIZDATA_COLUMN_QUIZSCORE + " INTEGER"
+    private static final String CREATE_CURRENTQUIZDATA =
+            "create table " + TABLE_CURRENTQUIZDATA + " ("
+                    + CURRENTQUIZDATA_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + CURRENTQUIZDATA_COLUMN_QUESTIONID + " INTEGER, "
+                    + CURRENTQUIZDATA_COLUMN_SELECTEDANSWER + " INTEGER"
                     + ")";
 
     // Note that the constructor is private!
     // So, it can be called only from
     // this class, in the getInstance method.
-    private QuizDataDBHelper( Context context ) {
+    private CurrentQuizDataDBHelper(Context context ) {
         super( context, DB_NAME, null, DB_VERSION );
     }
 
     // Access method to the single instance of the class.
     // It is synchronized, so that only one thread can executes this method, at a time.
-    public synchronized static QuizDataDBHelper getInstance( Context context ) {
+    public synchronized static CurrentQuizDataDBHelper getInstance(Context context ) {
         // check if the instance already exists and if not, create the instance
         if( helperInstance == null ) {
-            helperInstance = new QuizDataDBHelper( context.getApplicationContext() );
+            helperInstance = new CurrentQuizDataDBHelper( context.getApplicationContext() );
         }
         return helperInstance;
     }
@@ -63,8 +63,8 @@ public class QuizDataDBHelper extends SQLiteOpenHelper {
     // it does not exist yet.
     @Override
     public void onCreate( SQLiteDatabase db ) {
-        db.execSQL( CREATE_QUIZDATA );
-        Log.d( DEBUG_TAG, "Table " + TABLE_QUIZDATA + " created" );
+        db.execSQL( CREATE_CURRENTQUIZDATA );
+        Log.d( DEBUG_TAG, "Table " + TABLE_CURRENTQUIZDATA + " created" );
     }
 
     // We should override onUpgrade method, which will be used to upgrade the database if
@@ -72,8 +72,8 @@ public class QuizDataDBHelper extends SQLiteOpenHelper {
     // if the version will be bumped up, as we modify the database schema.
     @Override
     public void onUpgrade( SQLiteDatabase db, int oldVersion, int newVersion ) {
-        db.execSQL( "drop table if exists " + TABLE_QUIZDATA );
+        db.execSQL( "drop table if exists " + TABLE_CURRENTQUIZDATA );
         onCreate( db );
-        Log.d( DEBUG_TAG, "Table " + TABLE_QUIZDATA + " upgraded" );
+        Log.d( DEBUG_TAG, "Table " + TABLE_CURRENTQUIZDATA + " upgraded" );
     }
 }

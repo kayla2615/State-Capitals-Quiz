@@ -6,23 +6,23 @@ package edu.uga.cs.statecapitalsquiz;
  * The id is -1 if the object has not been persisted in the database yet, and
  * the db table's primary key value, if it has been persisted.
  */
-public class Quiz {
+public class CurrentQuiz {
 
     private long   id;
-    private String quizDate;
-    private int quizScore;
+    private long questionid;
+    private int selectedAnswer;
 
-    public Quiz()
+    public CurrentQuiz()
     {
         this.id = -1;
-        this.quizDate = null;
-        this.quizScore = -1;
+        this.questionid = -1;
+        this.selectedAnswer = -1;
     }
 
-    public Quiz( String quizDate, int quizScore) {
+    public CurrentQuiz(long questionid, int selectedAnswer) {
         this.id = -1;  // the primary key id will be set by a setter method
-        this.quizDate = null;
-        this.quizScore = -1;
+        this.questionid = -1;
+        this.selectedAnswer = -1;
     }
 
     public long getId()
@@ -35,30 +35,30 @@ public class Quiz {
         this.id = id;
     }
 
-    public String getQuizDate()
+    public long getQuestionid()
     {
-        return quizDate;
+        return questionid;
     }
 
-    public void setQuizDate(String quizDate)
+    public void setQuestionid(long questionid)
     {
-        this.quizDate = quizDate;
+        this.questionid = questionid;
     }
 
-    public int getQuizScore()
+    public int getSelectedAnswer()
     {
-        return quizScore;
+        return selectedAnswer;
     }
 
-    public void setQuizScore(int quizScore)
+    public void setSelectedAnswer(int selectedAnswer)
     {
-        this.quizScore = quizScore;
+        this.selectedAnswer = selectedAnswer;
     }
 
 
 
     public String toString()
     {
-        return id + ": " + quizDate + " " + quizScore;
+        return id + ": " + questionid + " " + selectedAnswer;
     }
 }
