@@ -1,133 +1,73 @@
 package edu.uga.cs.statecapitalsquiz;
 
 import android.os.Bundle;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.List;
+
 /**
- * ResultsFragment displays the quiz results to the user after completing a quiz.
- * It shows the score and provides a button to return to the main menu.
+ * ResultsFragment displays a scrollable history of past quiz results.
  */
 public class ResultsFragment extends Fragment {
 
     private static final String TAG = "ResultsFragment";
 
-    /**
-     * TextView that displays the quiz score
-     */
-    private TextView score;
+    private LinearLayout quizHistoryLayout;
+    private QuizData quizData;
 
-    /**
-     * Button to navigate back to the main menu
-     */
-    private Button mainMenuButton;
-    
-    /**
-     * Timestamp when the quiz was submitted
-     */
-    private String submittedAt;
-
-    /**
-     * The score value (number of correct answers)
-     */
-    private int scoreNum;
-
-    /**
-     * Required empty public constructor for fragment instantiation
-     */
     public ResultsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Called to have the fragment instantiate its user interface view.
-     *
-     * @param inflater The LayoutInflater object that can be used to inflate
-     * any views in the fragment
-     * @param container If non-null, this is the parent view that the fragment's
-     * UI should be attached to
-     * @param savedInstanceState If non-null, this fragment is being re-constructed
-     * from a previous saved state
-     * @return The View for the fragment's UI, or null
-     */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
-        Log.d( TAG, "ResultsFragment.onCreateView()" );
-
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        Log.d(TAG, "ResultsFragment.onCreateView()");
         return inflater.inflate(R.layout.fragment_results, container, false);
     }
 
-    /**
-     * Method to create a new instance of ResultsFragment with the provided score
-     * and submission timestamp.
-     *
-     * @param score The number of correct answers (out of 6)
-     * @param submittedAt The timestamp when the quiz was submitted
-     * @return A new instance of ResultsFragment
-     */
-    public static ResultsFragment newInstance(int score, String submittedAt ) {
-        Log.d(TAG, "ResultsFragment.newInstance: " + score + ", submittedAt=" + submittedAt );
-
-        ResultsFragment fragment = new ResultsFragment();
-        Bundle args = new Bundle();
-        args.putInt( "score", score );
-        args.putString( "submittedAt", submittedAt );
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    /**
-     * Called immediately after onCreateView has returned, but before any saved state
-     * has been restored into the view. Initializes the UI components and displays
-     * the quiz score and submission timestamp.
-     *
-     * @param view The View returned by onCreateView
-     * @param savedInstanceState If non-null, this fragment is being re-constructed
-     * from a previous saved state
-     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        Log.d( TAG, "QuizFragment.onViewCreated()" );
         super.onViewCreated(view, savedInstanceState);
 
-        // Get the score from arguments
-        Bundle args = getArguments();
-        if (args != null) {
-            scoreNum = args.getInt("score", 0);
-            submittedAt = args.getString("submittedAt", null);
+        quizHistoryLayout = view.findViewById(R.id.quizHistoryLayout);
+
+        quizData = new QuizData(getActivity());
+        quizData.open();
+
+        displayQuizHistory();
+    }
+
+    private void displayQuizHistory() {
+        List < Quiz > quizzes = quizData.retrieveAllQuizDatas();
+        Log.d(TAG, "Number of quizzes retrieved: " + quizzes.size());
+
+        if (quizzes.isEmpty()) {
+            TextView noDataText = new TextView(getActivity());
+            noDataText.setText("No quizzes taken yet.");
+            quizHistoryLayout.addView(noDataText);
+            return;
         }
 
-        score = view.findViewById( R.id.textView5 );
-        score.setText(scoreNum + "/6");
-
-        mainMenuButton = view.findViewById( R.id.button3 );
-        mainMenuButton.setOnClickListener(new ButtonClickListener());
-        if (submittedAt != null) {
-            Log.d(TAG, "Quiz submitted at: " + submittedAt);
+        for (Quiz quiz: quizzes) {
+            TextView quizText = new TextView(getActivity());
+            quizText.setText(quiz.getQuizDate() + " - Score: " + quiz.getQuizScore() + "/6");
+            quizText.setTextSize(18);
+            quizText.setPadding(10, 10, 10, 10);
+            quizHistoryLayout.addView(quizText);
         }
     }
 
-    /**
-     * Handles the main menu button click event.
-     */
-    private class ButtonClickListener implements View.OnClickListener {
-        /**
-         * Starts MainActivity to return the user to the main menu.
-         *
-         * @param view The view that was clicked
-         */
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(requireContext(), MainActivity.class);
-            startActivity(intent);
-        }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (quizData != null && quizData.isDBOpen()) quizData.close();
     }
 }

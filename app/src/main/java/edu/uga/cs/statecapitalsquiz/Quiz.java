@@ -8,57 +8,47 @@ package edu.uga.cs.statecapitalsquiz;
  */
 public class Quiz {
 
-    private long   id;
+    private long id;
     private String quizDate;
     private int quizScore;
 
-    public Quiz()
-    {
+    public Quiz() {
         this.id = -1;
         this.quizDate = null;
         this.quizScore = -1;
     }
 
-    public Quiz( String quizDate, int quizScore) {
-        this.id = -1;  // the primary key id will be set by a setter method
-        this.quizDate = null;
-        this.quizScore = -1;
-    }
-
-    public long getId()
-    {
-        return id;
-    }
-
-    public void setId(long id)
-    {
-        this.id = id;
-    }
-
-    public String getQuizDate()
-    {
-        return quizDate;
-    }
-
-    public void setQuizDate(String quizDate)
-    {
+    public Quiz(String quizDate, int quizScore) {
+        this.id = -1; // the primary key id will be set by a setter method
         this.quizDate = quizDate;
-    }
-
-    public int getQuizScore()
-    {
-        return quizScore;
-    }
-
-    public void setQuizScore(int quizScore)
-    {
         this.quizScore = quizScore;
     }
 
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
-    public String toString()
-    {
+    public String getQuizDate() {
+        return quizDate;
+    }
+
+    public void setQuizDate(String quizDate) {
+        this.quizDate = quizDate;
+    }
+
+    public int getQuizScore() {
+        return quizScore;
+    }
+
+    public void setQuizScore(int quizScore) {
+        this.quizScore = quizScore;
+    }
+
+    public String toString() {
         return id + ": " + quizDate + " " + quizScore;
     }
 }

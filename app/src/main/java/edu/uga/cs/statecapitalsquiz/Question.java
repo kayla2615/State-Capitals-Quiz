@@ -8,14 +8,13 @@ package edu.uga.cs.statecapitalsquiz;
  */
 public class Question {
 
-    private long   id;
+    private long id;
     private String state;
     private String capitalCity;
     private String secondCity;
     private String thirdCity;
 
-    public Question()
-    {
+    public Question() {
         this.id = -1;
         this.state = null;
         this.capitalCity = null;
@@ -24,65 +23,67 @@ public class Question {
     }
 
     public Question(String state, String capitalCity, String secondCity, String thirdCity) {
-        this.id = -1;  // the primary key id will be set by a setter method
+        this.id = -1; // the primary key id will be set by a setter method
         this.state = state;
         this.capitalCity = capitalCity;
         this.secondCity = secondCity;
         this.thirdCity = thirdCity;
     }
 
-    public long getId()
-    {
+    public long getId() {
         return id;
     }
 
-    public void setId(long id)
-    {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getState()
-    {
+    public String getState() {
         return state;
     }
 
-    public void setState(String  state)
-    {
+    public void setState(String state) {
         this.state = state;
     }
 
-    public String getCapitalCity()
-    {
+    public String getCapitalCity() {
         return capitalCity;
     }
 
-    public void setCapitalCity(String  capitalCity)
-    {
+    public void setCapitalCity(String capitalCity) {
         this.capitalCity = capitalCity;
     }
 
-    public String getSecondCity()
-    {
+    public String getSecondCity() {
         return secondCity;
     }
 
-    public void setSecondCity(String secondCity)
-    {
+    public void setSecondCity(String secondCity) {
         this.secondCity = secondCity;
     }
 
-    public String getThirdCity()
-    {
+    public String getThirdCity() {
         return thirdCity;
     }
 
-    public void setThirdCity(String thirdCity)
-    {
+    public void setThirdCity(String thirdCity) {
         this.thirdCity = thirdCity;
     }
 
-    public String toString()
-    {
+    public String toString() {
         return id + ": " + state + " " + capitalCity + secondCity + thirdCity;
+    }
+
+    public String getCity(int number) {
+        switch (number) {
+            case 0:
+                return getCapitalCity();
+            case 1:
+                return getSecondCity();
+            case 2:
+                return getThirdCity();
+            default:
+                return getThirdCity();
+        }
     }
 }

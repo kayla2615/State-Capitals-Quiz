@@ -6,17 +6,16 @@ import java.util.concurrent.Executors;
 import android.os.Handler;
 import android.os.Looper;
 
-
 /** This is a replacement class for the Android's  AsyncTask class.
  * However, handling of the task's progress has not been implemented.
  * It uses Java's standard concurrency framework.
  * @param <Param> type of the input parameter for doInBackground
  * @param <Result> type of the result value returned by doInBackground
  */
-public abstract class AsyncTask<Param, Result> {
+public abstract class AsyncTask < Param, Result > {
 
     // An internal method to execute something in background
-    private void executeInBackground( Param... params ) {
+    private void executeInBackground(Param...params) {
 
         // Get en executor service -- it will run the task in the
         // background, i.e., in this executor.  This executor service
@@ -37,10 +36,10 @@ public abstract class AsyncTask<Param, Result> {
         // main UI thread.  The main UI thread will update the UI accordingly.
         // Again, since the Runnable below will execute in a different thread, the main
         // UI thread will not be blocked.
-        executor.execute( () -> {
+        executor.execute(() -> {
 
             // Run the method body (doInBackground)
-            Result result = doInBackground( params );
+            Result result = doInBackground(params);
 
             // Now, pass the result to the main UI thread.
             //
@@ -55,26 +54,26 @@ public abstract class AsyncTask<Param, Result> {
             // for posting messages on the main Looper's queue.
             // If you are curious, you can examine the source code of the Handler class here:
             // https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/os/Handler.java
-            Handler handler = new Handler( looper );
+            Handler handler = new Handler(looper);
 
             // Post the processing of the result of the doInBackground method
             // on the main UI thread's looper. Android will process it.
-            handler.post( new Runnable() {
+            handler.post(new Runnable() {
                 @Override
                 public void run() {
                     // handle the method result in the main UI thread
-                    onPostExecute( result );
+                    onPostExecute(result);
                 }
             });
         });
     }
 
     // This method is just like in the AsyncTask class
-    public void execute( Param... arguments ){
-        executeInBackground( arguments );
+    public void execute(Param...arguments) {
+        executeInBackground(arguments);
     }
 
     // These abstract methods are just like in the AsyncTask class
-    protected abstract Result doInBackground( Param... arguments );
-    protected abstract void onPostExecute( Result result );
+    protected abstract Result doInBackground(Param...arguments);
+    protected abstract void onPostExecute(Result result);
 }

@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-
 /**
  * This is a SQLiteOpenHelper class, which Android uses to create, upgrade, delete an SQLite database
  * in an app.
@@ -38,27 +37,26 @@ public class QuestionDataDBHelper extends SQLiteOpenHelper {
     // Note that _id is an auto increment primary key, i.e. the database will
     // automatically generate unique id values as keys.
     private static final String CREATE_QUESTIONDATA =
-            "create table " + TABLE_QUESTIONDATA + " ("
-                    + QUESTIONDATA_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + QUESTIONDATA_COLUMN_STATE + " TEXT, "
-                    + QUESTIONDATA_COLUMN_CAPITALCITY + " TEXT, "
-                    + QUESTIONDATA_COLUMN_SECONDCITY + " TEXT, "
-                    + QUESTIONDATA_COLUMN_THIRDCITY + " TEXT "
-                    + ")";
+            "create table " + TABLE_QUESTIONDATA + " (" +
+                    QUESTIONDATA_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    QUESTIONDATA_COLUMN_STATE + " TEXT, " +
+                    QUESTIONDATA_COLUMN_CAPITALCITY + " TEXT, " +
+                    QUESTIONDATA_COLUMN_SECONDCITY + " TEXT, " +
+                    QUESTIONDATA_COLUMN_THIRDCITY + " TEXT )";
 
     // Note that the constructor is private!
     // So, it can be called only from
     // this class, in the getInstance method.
-    private QuestionDataDBHelper(Context context ) {
-        super( context, DB_NAME, null, DB_VERSION );
+    private QuestionDataDBHelper(Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
     }
 
     // Access method to the single instance of the class.
     // It is synchronized, so that only one thread can executes this method, at a time.
-    public synchronized static QuestionDataDBHelper getInstance(Context context ) {
+    public synchronized static QuestionDataDBHelper getInstance(Context context) {
         // check if the instance already exists and if not, create the instance
-        if( helperInstance == null ) {
-            helperInstance = new QuestionDataDBHelper( context.getApplicationContext() );
+        if (helperInstance == null) {
+            helperInstance = new QuestionDataDBHelper(context.getApplicationContext());
         }
         return helperInstance;
     }
@@ -66,18 +64,18 @@ public class QuestionDataDBHelper extends SQLiteOpenHelper {
     // We must override onCreate method, which will be used to create the database if
     // it does not exist yet.
     @Override
-    public void onCreate( SQLiteDatabase db ) {
-        db.execSQL( CREATE_QUESTIONDATA );
-        Log.d( DEBUG_TAG, "Table " + TABLE_QUESTIONDATA + " created" );
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(CREATE_QUESTIONDATA);
+        Log.d(DEBUG_TAG, "Table " + TABLE_QUESTIONDATA + " created");
     }
 
     // We should override onUpgrade method, which will be used to upgrade the database if
     // its version (DB_VERSION) has changed.  This will be done automatically by Android
     // if the version will be bumped up, as we modify the database schema.
     @Override
-    public void onUpgrade( SQLiteDatabase db, int oldVersion, int newVersion ) {
-        db.execSQL( "drop table if exists " + TABLE_QUESTIONDATA );
-        onCreate( db );
-        Log.d( DEBUG_TAG, "Table " + TABLE_QUESTIONDATA + " upgraded" );
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("drop table if exists " + TABLE_QUESTIONDATA);
+        onCreate(db);
+        Log.d(DEBUG_TAG, "Table " + TABLE_QUESTIONDATA + " upgraded");
     }
 }
