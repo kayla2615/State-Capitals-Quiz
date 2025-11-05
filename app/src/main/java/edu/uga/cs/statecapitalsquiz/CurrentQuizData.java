@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is facilitates storing and restoring job leads stored.
+ * This class is facilitates storing and restoring quizzes stored.
  */
 public class CurrentQuizData {
 
@@ -52,9 +52,13 @@ public class CurrentQuizData {
         return db.isOpen();
     }
 
-    // Retrieve all job leads and return them as a List.
-    // This is how we restore persistent objects stored as rows in the job leads table in the database.
-    // For each retrieved row, we create a new QuizData (Java POJO object) instance and add it to the list.
+    /**
+     * Retrieves all current quiz questions from the database.
+     * This is how we restore persistent objects stored as rows in the current quiz table.
+     * For each retrieved row, we create a new CurrentQuiz instance and add it to the list.
+     *
+     * @return A list of all CurrentQuiz objects stored in the database
+     */
     public List < CurrentQuiz > getCurrentQuiz() {
         ArrayList < CurrentQuiz > currentQuizData = new ArrayList < > ();
         Cursor cursor = null;
@@ -65,7 +69,7 @@ public class CurrentQuizData {
             cursor = db.query(CurrentQuizDataDBHelper.TABLE_CURRENTQUIZDATA, allColumns,
                     null, null, null, null, null);
 
-            // collect all job leads into a List
+            // collect all current quiz questions into a List
             if (cursor != null && cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
                     // No need to check column count, or at least check >= 3

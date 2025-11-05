@@ -14,6 +14,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.List;
 
+/**
+ * QuizResultsActivity displays the past quiz results to the user.
+ * This activity shows previously completed quizzes with their scores
+ * and submission timestamps.
+ */
 public class QuizResultsActivity extends AppCompatActivity {
 
     private static final String TAG = "QuizResultsActivity";

@@ -33,7 +33,7 @@ public class QuestionDataDBHelper extends SQLiteOpenHelper {
     // This is a reference to the only instance for the helper.
     private static QuestionDataDBHelper helperInstance;
 
-    // A Create table SQL statement to create a table for job leads.
+    // A Create table SQL statement to create a table for quiz questions.
     // Note that _id is an auto increment primary key, i.e. the database will
     // automatically generate unique id values as keys.
     private static final String CREATE_QUESTIONDATA =

@@ -1,8 +1,8 @@
 package edu.uga.cs.statecapitalsquiz;
 
 /**
- * This class (a POJO) represents a single job lead, including the id, company name,
- * phone number, URL, and some comments.
+ * This class represents a single question in the current quiz being taken,
+ * including the id, question ID reference, and the selected answer.
  * The id is -1 if the object has not been persisted in the database yet, and
  * the db table's primary key value, if it has been persisted.
  */

@@ -57,14 +57,14 @@ public class QuizData {
             cursor = db.query(QuizDataDBHelper.TABLE_QUIZDATA, allColumns,
                     null, null, null, null, null);
 
-            // collect all job leads into a List
+            // collect all quiz results into a List
             if (cursor != null && cursor.getCount() > 0) {
 
                 while (cursor.moveToNext()) {
 
                     if (cursor.getColumnCount() >= 3) {
 
-                        // get all attribute values of this job lead
+                        // get all attribute values of this quiz result
                         columnIndex = cursor.getColumnIndex(QuizDataDBHelper.QUIZDATA_COLUMN_ID);
                         long id = cursor.getLong(columnIndex);
                         columnIndex = cursor.getColumnIndex(QuizDataDBHelper.QUIZDATA_COLUMN_QUIZDATE);
@@ -88,7 +88,7 @@ public class QuizData {
                 cursor.close();
             }
         }
-        // return a list of retrieved job leads
+        // return a list of retrieved quiz results
         return quizDatas;
     }
 

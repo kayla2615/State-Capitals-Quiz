@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is facilitates storing and restoring job leads stored.
+ * This class facilitates storing and restoring quiz questions in the database.
  */
 public class QuestionData {
 
@@ -70,14 +70,14 @@ public class QuestionData {
             cursor = db.query(QuestionDataDBHelper.TABLE_QUESTIONDATA, allColumns,
                     null, null, null, null, null);
 
-            // collect all job leads into a List
+            // collect all questions into a List
             if (cursor != null && cursor.getCount() > 0) {
 
                 while (cursor.moveToNext()) {
 
                     if (cursor.getColumnCount() >= 5) {
 
-                        // get all attribute values of this job lead
+                        // get all attribute values of this question
                         columnIndex = cursor.getColumnIndex(QuestionDataDBHelper.QUESTIONDATA_COLUMN_ID);
                         long id = cursor.getLong(columnIndex);
                         columnIndex = cursor.getColumnIndex(QuestionDataDBHelper.QUESTIONDATA_COLUMN_STATE);
@@ -107,11 +107,16 @@ public class QuestionData {
                 cursor.close();
             }
         }
-        // return a list of retrieved job leads
+        // return a list of retrieved questions
         return questionData;
     }
 
-    // Store a new job lead in the database.
+    /**
+     * Stores a new question in the database.
+     *
+     * @param question The Question object to store
+     * @return The Question object with its ID set to the database primary key
+     */
     public Question storeQuestionData(Question question) {
 
         // Prepare the values for all of the necessary columns in the table
